@@ -12,17 +12,12 @@ export const registerDriver = async (
 
   // Check if the password and confirm password are same
   if (password !== cnfPassword) {
-    // const error: customError = {
-    //   success: false,
-    //   status: 401,
-    //   message: "Password and confirm password doesn't match",
-    // };
-    // return next(error);
-
-    res.status(401).json({
-      message: "Password and confirm password doesn't match",
+    const error: customError = {
       success: false,
-    });
+      status: 401,
+      message: "Password and confirm password doesn't match",
+    };
+    return next(error);
   }
 
   // Check if the user already exists if the user exists, return an error Else, create a new user
