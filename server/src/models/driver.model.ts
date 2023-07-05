@@ -1,36 +1,38 @@
 import mongoose from "mongoose";
-import { Driver } from "../utils/types";
+import { Driver } from "../utils/types.js";
 
 // Creating the driver schema
 const driverSchema = new mongoose.Schema({
-  id: {
+  driverId: {
     type: Number,
     required: true,
     unique: true,
   },
-  name: {
+  driverName: {
     type: String,
     required: [true, "Please enter your name"],
   },
-  email: {
+  driverEmail: {
     type: String,
     required: [true, "Please enter your email"],
     unique: true,
   },
-  phone: {
-    type: Number,
+  driverPhone: {
+    type: String,
     required: [true, "Please enter your phone number"],
     unique: true,
     maxlength: 10,
     minlength: 10,
   },
-  password: {
+  cabId: {
+    // cabId is the foreign key
     type: String,
-    required: [true, "Please enter your password"],
+    unique: true,
+    default: null,
   },
 });
 
 // Creating the driver model
-const Driver = mongoose.model<Driver>("Driver", driverSchema);
+const DriverModel = mongoose.model<Driver>("Driver", driverSchema);
 
-export default Driver;
+export default DriverModel;

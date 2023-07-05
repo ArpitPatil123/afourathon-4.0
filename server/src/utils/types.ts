@@ -1,6 +1,6 @@
 import { Document } from "mongoose";
 
-export interface Driver extends Document {
+export interface User extends Document {
   id: number;
   name: string;
   email: string;
@@ -9,8 +9,16 @@ export interface Driver extends Document {
   cnfPassword?: string;
 }
 
-export interface customError{
+export interface customError {
   status: number;
   success: boolean;
   message: string;
+}
+
+export interface Driver extends Document {
+  driverId: number;
+  driverName: string;
+  driverEmail: string;
+  driverPhone: string;
+  cabId: string;
 }

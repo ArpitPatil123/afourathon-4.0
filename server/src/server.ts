@@ -6,8 +6,11 @@ import dotenv from "dotenv";
 
 // Importing required files
 import connectDB from "./utils/db.js";
-import auth_router from "./routes/auth.routes.js";
 import errorHandler from "./middlewares/errorHandler.js";
+
+// Importing routes
+import auth_router from "./routes/auth.routes.js";
+import driver_router from "./routes/driver.routes.js";
 
 // Initializing the express app
 const app: Application = express();
@@ -28,7 +31,8 @@ app.use(
 connectDB();
 
 // Creating routes
-app.use("/api/v4/auth", auth_router);
+app.use("/api/v4/auth", auth_router); // Authentication routes
+app.use("/api/v4/driver", driver_router); // Driver routes
 
 // Global Error Handler
 app.use(errorHandler);
