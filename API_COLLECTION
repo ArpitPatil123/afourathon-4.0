@@ -1,0 +1,123 @@
+{
+    "client": "Thunder Client",
+    "collectionName": "AFourathon",
+    "dateExported": "2023-07-05T16:27:44.451Z",
+    "version": "1.1",
+    "folders": [
+        {
+            "_id": "02328746-5355-4c90-94f3-c86480b1b192",
+            "name": "AUTH",
+            "containerId": "",
+            "created": "2023-07-03T17:58:12.644Z",
+            "sortNum": 10000
+        },
+        {
+            "_id": "609f59e0-de24-4f37-b7cc-0f88d3b268ed",
+            "name": "Driver CRUD",
+            "containerId": "",
+            "created": "2023-07-05T12:28:04.786Z",
+            "sortNum": 20000
+        }
+    ],
+    "requests": [
+        {
+            "_id": "c9dff576-5823-4075-8785-fcb8bd9dd7f9",
+            "colId": "ab331d3c-b082-4a19-b97d-ecdee33be1bf",
+            "containerId": "02328746-5355-4c90-94f3-c86480b1b192",
+            "name": "Register",
+            "url": "http://localhost:3000/api/v4/auth/register",
+            "method": "POST",
+            "sortNum": 10000,
+            "created": "2023-07-03T17:58:21.629Z",
+            "modified": "2023-07-04T14:59:43.853Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"name\": \"arpit\",\n  \"email\": \"arpit123@gmail.com\",\n  \"password\": \"12345\",\n  \"id\": 1,\n  \"phone\": 1234567890,\n  \"cnfPassword\": \"12345\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "7afabd2b-ecf2-404c-b784-dad446a7d1b6",
+            "colId": "ab331d3c-b082-4a19-b97d-ecdee33be1bf",
+            "containerId": "02328746-5355-4c90-94f3-c86480b1b192",
+            "name": "Login",
+            "url": "http://localhost:3000/api/v4/auth/login",
+            "method": "POST",
+            "sortNum": 20000,
+            "created": "2023-07-05T11:25:21.838Z",
+            "modified": "2023-07-05T11:25:44.947Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"email\": \"arpit123@gmail.com\",\n  \"password\": \"12345\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "fbf30532-f1ef-48de-97a4-034cf7050db5",
+            "colId": "ab331d3c-b082-4a19-b97d-ecdee33be1bf",
+            "containerId": "609f59e0-de24-4f37-b7cc-0f88d3b268ed",
+            "name": "Add Driver",
+            "url": "http://localhost:3000/api/v4/driver/add_driver",
+            "method": "POST",
+            "sortNum": 30000,
+            "created": "2023-07-05T12:28:15.754Z",
+            "modified": "2023-07-05T12:33:38.891Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"driverName\":\"arpit\",\n  \"driverEmail\":\"arpit123@gmail.com\",\n  \"driverPhone\": \"1234567890\",\n  \"driverId\":1\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "dc326e28-e343-4f40-8900-658bddf8ab23",
+            "colId": "ab331d3c-b082-4a19-b97d-ecdee33be1bf",
+            "containerId": "609f59e0-de24-4f37-b7cc-0f88d3b268ed",
+            "name": "Delete Driver",
+            "url": "http://localhost:3000/api/v4/driver/delete_driver/1",
+            "method": "DELETE",
+            "sortNum": 40000,
+            "created": "2023-07-05T12:50:16.976Z",
+            "modified": "2023-07-05T12:51:17.117Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "f9408559-10b1-45e6-b822-770e94483e77",
+            "colId": "ab331d3c-b082-4a19-b97d-ecdee33be1bf",
+            "containerId": "609f59e0-de24-4f37-b7cc-0f88d3b268ed",
+            "name": "Get All Drivers",
+            "url": "http://localhost:3000/api/v4/driver/get_all_drivers",
+            "method": "GET",
+            "sortNum": 60000,
+            "created": "2023-07-05T13:00:47.031Z",
+            "modified": "2023-07-05T13:01:07.160Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "7baff423-b517-43b5-ba85-675efc519a32",
+            "colId": "ab331d3c-b082-4a19-b97d-ecdee33be1bf",
+            "containerId": "609f59e0-de24-4f37-b7cc-0f88d3b268ed",
+            "name": "Assign Cab",
+            "url": "http://localhost:3000/api/v4/driver/assign_cab",
+            "method": "PUT",
+            "sortNum": 70000,
+            "created": "2023-07-05T13:05:55.991Z",
+            "modified": "2023-07-05T13:06:22.245Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        }
+    ]
+}

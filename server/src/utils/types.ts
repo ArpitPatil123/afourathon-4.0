@@ -22,3 +22,10 @@ export interface Driver extends Document {
   driverPhone: string;
   cabId: string;
 }
+
+export interface Cab extends Document {
+  cabRegistrationNumber: string;
+  cabModel: string;
+  cabColour: string;
+  driverId?: number;
+}
