@@ -3,6 +3,7 @@ import { User, customError } from "../utils/types.js";
 import UserModel from "../models/user.model.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import createError from "../utils/createError.js";
 
 export const registerUser = async (
   req: Request,
@@ -11,26 +12,38 @@ export const registerUser = async (
 ) => {
   const { name, email, password, id, phone, cnfPassword }: User = req.body;
 
+  // Check if all the fields are present
+  if (!name || !email || !password || !id || !phone || !cnfPassword) {
+    return createError(req, res, next, "Please provide all the details", 400);
+  }
+
+  // Check if the phone number is valid
+  if (phone.length !== 10) {
+    return createError(
+      req,
+      res,
+      next,
+      "Please provide a valid phone number",
+      400
+    );
+  }
+
   // Check if the password and confirm password are same
   if (password !== cnfPassword) {
-    const error: customError = {
-      success: false,
-      status: 401,
-      message: "Password and confirm password doesn't match",
-    };
-    return next(error);
+    return createError(
+      req,
+      res,
+      next,
+      "Password and Confirm Password doesn't match",
+      400
+    );
   }
 
   // Check if the user already exists if the user exists, return an error Else, create a new user
   const user = await UserModel.findOne({ email: email });
 
   if (user) {
-    const error: customError = {
-      success: false,
-      status: 409,
-      message: "User already Exists",
-    };
-    return next(error);
+    return createError(req, res, next, "User already exists", 409);
   }
 
   // Hash the password
@@ -62,27 +75,22 @@ export const loginUser = async (
 ) => {
   const { email, password }: User = req.body;
 
+  // Check if all the fields are present
+  if (!email || !password) {
+    return createError(req, res, next, "Please provide all the details", 400);
+  }
+
   // Check if the user exists
   const user = await UserModel.findOne({ email: email });
 
   if (!user) {
-    const error: customError = {
-      success: false,
-      status: 404,
-      message: "User not found",
-    };
-    return next(error);
+    return createError(req, res, next, "User doesn't exist", 404);
   }
 
   // Check if the password is correct
   const validPassword = await bcrypt.compare(password, user.password);
   if (!validPassword) {
-    const error: customError = {
-      success: false,
-      status: 401,
-      message: "Invalid password",
-    };
-    return next(error);
+    return createError(req, res, next, "Invalid password", 400);
   }
 
   // Create and assign a token

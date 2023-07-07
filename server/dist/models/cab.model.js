@@ -15,7 +15,6 @@ const cabSchema = new mongoose.Schema({
     },
     driverId: {
         type: Number,
-        required: true,
         default: null,
     },
 });

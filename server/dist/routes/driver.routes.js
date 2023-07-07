@@ -8,5 +8,5 @@ router.get("/get_all_drivers", getAllDrivers);
 // Delete driver details from the database
 router.delete("/delete_driver/:driverId", deleteDriver);
 // Assign cab to the driver
-router.put("/assign_cab/:driverId/:cabId", assignCab);
+router.put("/assign_cab/:driverId/:cabRegistrationNumber", assignCab);
 export default router;

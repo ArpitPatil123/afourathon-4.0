@@ -15,7 +15,7 @@ router.post("/add_cab", addCab);
 router.get("/get_all_cabs", getAllCabs);
 
 // Assign cab to the driver
-router.put("/assign_driver/:driverId/:cabId", assignDriver);
+router.put("/assign_driver/:driverId/:cabRegistrationNumber", assignDriver);
 
 // Delete cab details from the database using cabId
 router.delete("/delete_cab/:cabRegistrationNumber", deleteCab);

@@ -4,7 +4,7 @@ export interface User extends Document {
   id: number;
   name: string;
   email: string;
-  phone: number;
+  phone: string;
   password: string;
   cnfPassword?: string;
 }

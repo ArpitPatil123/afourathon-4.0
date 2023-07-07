@@ -1,43 +1,9 @@
 // Importing required packages
-import express, { Application } from "express";
-import cors from "cors";
 import { Server } from "http";
-import dotenv from "dotenv";
+import app from "./app.js";
 
-// Importing required files
-import connectDB from "./utils/db.js";
-import errorHandler from "./middlewares/errorHandler.js";
-
-// Importing routes
-import auth_router from "./routes/auth.routes.js";
-import driver_router from "./routes/driver.routes.js";
-import cab_router from "./routes/cab.route.js";
-
-// Initializing the express app
-const app: Application = express();
+// Initializing the port
 const PORT = process.env.PORT || 3000; // Setting the port
-
-// Setting up the express app
-dotenv.config();
-
-// Middlewares
-app.use(express.json());
-app.use(
-  cors({
-    credentials: true,
-  })
-);
-
-// Connecting to the database
-connectDB();
-
-// Creating routes
-app.use("/api/v4/auth", auth_router); // Authentication routes
-app.use("/api/v4/driver", driver_router); // Driver routes
-app.use("/api/v4/cab", cab_router); // Cab routes
-
-// Global Error Handler
-app.use(errorHandler);
 
 // Starting the server
 const server: Server = app.listen(PORT, () => {

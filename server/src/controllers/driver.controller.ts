@@ -53,35 +53,6 @@ export const addDriver = async (
   });
 };
 
-// Delete driver details from the database using driverId
-export const deleteDriver = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  const { driverId } = req.params;
-
-  // Check if the driverId is present
-  if (!driverId) {
-    return createError(req, res, next, "Please provide the driverId", 400);
-  }
-
-  // Check if the driver exists
-  const driver = await DriverModel.findOne({ driverId: driverId });
-  if (!driver) {
-    return createError(req, res, next, "Driver does not exist", 404);
-  }
-
-  // Delete the driver
-  await DriverModel.deleteOne({ driverId: driverId });
-
-  // Send the response
-  res.status(200).json({
-    success: true,
-    message: "Driver deleted successfully",
-  });
-};
-
 // Get list of all the drivers
 export const getAllDrivers = async (
   req: Request,
@@ -90,6 +61,11 @@ export const getAllDrivers = async (
 ) => {
   // Get all the drivers
   const drivers = await DriverModel.find();
+
+  // Check if the drivers array is empty
+  if (drivers.length === 0) {
+    return createError(req, res, next, "No drivers found", 404);
+  }
 
   // Send the response
   res.status(200).json({
@@ -105,11 +81,17 @@ export const assignCab = async (
   res: Response,
   next: NextFunction
 ) => {
-  const { driverId, cabId } = req.params;
+  const { driverId, cabRegistrationNumber } = req.params;
 
-  // Check if the driverId and cabId is present
-  if (!driverId || !cabId) {
-    return createError(req, res, next, "Please provide all the details", 400);
+  // Check if the driverId and cabRegistrationNumber is present
+  if (!driverId || !cabRegistrationNumber) {
+    return createError(
+      req,
+      res,
+      next,
+      "Please provide Driver Id and Cab Registration Number",
+      400
+    );
   }
 
   // Check if the driver exists
@@ -119,20 +101,69 @@ export const assignCab = async (
   }
 
   // Check if the cab exists
-  const cab = await CabModel.findOne({ cabId: cabId });
+  const cab = await CabModel.findOne({
+    cabRegistrationNumber: cabRegistrationNumber,
+  });
   if (!cab) {
     return createError(req, res, next, "Cab not found", 404);
+  }
+
+  // Check if the cab is already assigned to a driver
+  if (cab.driverId) {
+    return createError(
+      req,
+      res,
+      next,
+      "Cab is already assigned to Driver",
+      409
+    );
   }
 
   // Assign cab to the driver
   await DriverModel.updateOne(
     { driverId: driverId },
-    { $set: { cabId: cabId } }
+    { $set: { cabRegistrationNumber: cabRegistrationNumber } }
+  );
+
+  // Update the cab with the driverId
+  await CabModel.updateOne(
+    { cabRegistrationNumber: cabRegistrationNumber },
+    { $set: { driverId: driverId } }
   );
 
   // Send the response
   res.status(200).json({
     success: true,
     message: "Cab assigned successfully",
+  });
+};
+
+// Delete driver details from the database using driverId
+export const deleteDriver = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const { driverId } = req.params;
+
+  // Check if the driver exists
+  const driver = await DriverModel.findOne({ driverId: driverId });
+  if (!driver) {
+    return createError(req, res, next, "Driver does not exist", 404);
+  }
+
+  // Delete the driverId assigned to the cab if any
+  await CabModel.updateOne(
+    { driverId: driverId },
+    { $set: { driverId: null } }
+  );
+
+  // Delete the driver
+  await DriverModel.deleteOne({ driverId: driverId });
+
+  // Send the response
+  res.status(200).json({
+    success: true,
+    message: "Driver deleted successfully",
   });
 };

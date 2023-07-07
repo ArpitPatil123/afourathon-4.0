@@ -22,8 +22,8 @@ const driverSchema = new mongoose.Schema({
         maxlength: 10,
         minlength: 10,
     },
-    cabId: {
-        // cabId is the foreign key
+    cabRegistrationNumber: {
+        // cabRegistrationNumber is the foreign key
         type: String,
         unique: true,
         default: null,
