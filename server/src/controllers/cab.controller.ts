@@ -147,11 +147,14 @@ export const deleteCab = async (
     return createError(req, res, next, "Cab does not exist", 404);
   }
 
-  // Delete the cabRegistrationNumber from the driver
-  await DriverModel.findOneAndUpdate(
-    { cabRegistrationNumber: cabRegistrationNumber },
-    { $set: { cabRegistrationNumber: null } }
-  );
+  // Check if cab is assigned to a driver
+  if (cab.driverId) {
+    // Delete the cabRegistrationNumber from the driver
+    await DriverModel.findOneAndUpdate(
+      { cabRegistrationNumber: cabRegistrationNumber },
+      { $set: { cabRegistrationNumber: null } }
+    );
+  }
 
   // Delete the cab from the database
   await CabModel.findOneAndDelete({
@@ -162,5 +165,101 @@ export const deleteCab = async (
   res.status(200).json({
     success: true,
     message: "Cab deleted successfully",
+  });
+};
+
+// Get all the cabs with driver assigned
+export const getAllCabsWithDriver = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  // Get all the cabs from the database
+  const cabs = await CabModel.find({
+    driverId: { $ne: null },
+  });
+
+  // Check if cabs array is empty
+  if (cabs.length === 0) {
+    return createError(req, res, next, "No cabs found", 404);
+  }
+
+  // Send the response
+  res.status(200).json({
+    success: true,
+    message: "Cabs fetched successfully",
+    data: cabs,
+  });
+};
+
+// Unassign driver from a cab
+export const unassignDriver = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const { cabRegistrationNumber } = req.params;
+
+  // Check if the cab exists
+  const cab = await CabModel.findOne({
+    cabRegistrationNumber: cabRegistrationNumber,
+  });
+
+  // If the cab does not exist, return an error
+  if (!cab) {
+    return createError(req, res, next, "Cab does not exist", 404);
+  }
+
+  // Check if the cab is already assigned to a driver
+  if (!cab.driverId) {
+    return createError(
+      req,
+      res,
+      next,
+      "No driver is assigned to this cab",
+      409
+    );
+  }
+
+  // Unassign the driver from the cab
+  const unassignedCab = await CabModel.findOneAndUpdate(
+    { cabRegistrationNumber: cabRegistrationNumber },
+    { $set: { driverId: null } }
+  );
+
+  // Update the driver details
+  await DriverModel.findOneAndUpdate(
+    { driverId: cab.driverId },
+    { $set: { cabRegistrationNumber: null } }
+  );
+
+  // Send the response
+  res.status(200).json({
+    success: true,
+    message: "Driver unassigned successfully",
+  });
+};
+
+// Get all the cabs without driver assigned
+export const getAllCabsWithoutDriver = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  // Get all cabs without driver assigned
+  const cabs = await CabModel.find({
+    driverId: null,
+  });
+
+  // Check if the cabs array is empty
+  if (!cabs) {
+    return createError(req, res, next, "Cabs not found", 400);
+  }
+
+  // Return cabs
+  res.status(200).json({
+    success: true,
+    message: "List of all the cabs without driver assigned",
+    data: cabs,
   });
 };

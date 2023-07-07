@@ -20,7 +20,7 @@ export interface Driver extends Document {
   driverName: string;
   driverEmail: string;
   driverPhone: string;
-  cabId: string;
+  cabRegistrationNumber: string;
 }
 
 export interface Cab extends Document {
