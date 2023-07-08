@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { addDriver, deleteDriver, getAllDrivers, assignCab, getAllDriversWithCab, unassignCab, getAllDriversWithoutCab, } from "../controllers/driver.controller.js";
+import { addDriver, deleteDriver, getAllDrivers, assignCab, getAllDriversWithCab, unassignCab, getAllDriversWithoutCab, updateDriver, } from "../controllers/driver.controller.js";
 const router = Router();
 // Add driver details in the database
 router.post("/add_driver", addDriver);
@@ -15,4 +15,6 @@ router.put("/unassign_cab/:driverId", unassignCab);
 router.get("/get_all_drivers_with_cab", getAllDriversWithCab);
 // Get all drivers without cab assigned
 router.get("/get_all_drivers_without_cab", getAllDriversWithoutCab);
+// Update driver details in the database
+router.put("/update_driver/:driverId", updateDriver);
 export default router;

@@ -15,6 +15,10 @@ const cabSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  isAssigned: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const CabModel = mongoose.model<Cab>("Cab", cabSchema);

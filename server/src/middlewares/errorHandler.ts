@@ -8,9 +8,6 @@ const errorHandler = (
   res: Response,
   next: NextFunction
 ) => {
-  // Log to console for dev
-  console.log(err);
-
   res.status(err.status).json({
     success: err.success,
     message: err.message,

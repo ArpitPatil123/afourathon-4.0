@@ -26,4 +26,5 @@ export interface Cab extends Document {
   cabRegistrationNumber: string;
   cabModel: string;
   cabColour: string;
+  isAssigned: boolean;
 }

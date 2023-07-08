@@ -41,6 +41,7 @@ export const registerUser = async (
 
   // Check if the user already exists if the user exists, return an error Else, create a new user
   const user = await UserModel.findOne({ email: email });
+
   if (user?.phone === phone) {
     return createError(req, res, next, "Phone number already exists", 409);
   }

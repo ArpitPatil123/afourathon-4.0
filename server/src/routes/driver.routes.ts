@@ -7,6 +7,7 @@ import {
   getAllDriversWithCab,
   unassignCab,
   getAllDriversWithoutCab,
+  updateDriver,
 } from "../controllers/driver.controller.js";
 
 const router: Router = Router();
@@ -31,5 +32,8 @@ router.get("/get_all_drivers_with_cab", getAllDriversWithCab);
 
 // Get all drivers without cab assigned
 router.get("/get_all_drivers_without_cab", getAllDriversWithoutCab);
+
+// Update driver details in the database
+router.put("/update_driver/:driverId", updateDriver);
 
 export default router;
