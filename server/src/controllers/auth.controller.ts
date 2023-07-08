@@ -10,10 +10,10 @@ export const registerUser = async (
   res: Response,
   next: NextFunction
 ) => {
-  const { name, email, password, id, phone, cnfPassword }: User = req.body;
+  const { name, email, password, phone, cnfPassword }: User = req.body;
 
   // Check if all the fields are present
-  if (!name || !email || !password || !id || !phone || !cnfPassword) {
+  if (!name || !email || !password || !phone || !cnfPassword) {
     return createError(req, res, next, "Please provide all the details", 400);
   }
 
@@ -41,6 +41,9 @@ export const registerUser = async (
 
   // Check if the user already exists if the user exists, return an error Else, create a new user
   const user = await UserModel.findOne({ email: email });
+  if (user?.phone === phone) {
+    return createError(req, res, next, "Phone number already exists", 409);
+  }
 
   if (user) {
     return createError(req, res, next, "User already exists", 409);
@@ -55,7 +58,6 @@ export const registerUser = async (
     name,
     email,
     password: hashPassword,
-    id,
     phone,
   });
 
@@ -95,7 +97,7 @@ export const loginUser = async (
 
   // Create and assign a token
   const token = jwt.sign(
-    { _id: user._id, name: user.name, id: user.id },
+    { _id: user._id, name: user.name },
     process.env.TOKEN_SECRET!
   );
 

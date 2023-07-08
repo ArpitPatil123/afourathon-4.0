@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 // Creating the driver schema
 const driverSchema = new mongoose.Schema({
     driverId: {
-        type: Number,
+        type: String,
         required: true,
         unique: true,
     },
@@ -23,12 +23,11 @@ const driverSchema = new mongoose.Schema({
         minlength: 10,
     },
     cabRegistrationNumber: {
-        // cabRegistrationNumber is the foreign key
         type: String,
-        unique: true,
         default: null,
     },
 });
+driverSchema.index({ cabRegistrationNumber: 1 }, { sparse: true });
 // Creating the driver model
 const DriverModel = mongoose.model("Driver", driverSchema);
 export default DriverModel;

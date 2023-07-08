@@ -8,6 +8,12 @@ export const addCab = async (req, res, next) => {
     if (!cabRegistrationNumber || !cabModel || !cabColour) {
         return createError(req, res, next, "Please provide all the details", 400);
     }
+    // Check cab registration number using regex
+    const regex = /^[A-Z]{2}[0-9]{2}[A-Z]{2}[0-9]{4}$/;
+    // check if the cab registration number is valid
+    if (!regex.test(cabRegistrationNumber)) {
+        return createError(req, res, next, "Please provide a valid cab registration number", 400);
+    }
     // Check if the cab already exists if the cab exists, return an error Else, create a new cab
     const cab = await CabModel.findOne({
         cabRegistrationNumber: cabRegistrationNumber,
@@ -67,14 +73,8 @@ export const assignDriver = async (req, res, next) => {
     if (!driver) {
         return createError(req, res, next, "Driver does not exist", 404);
     }
-    // Check if the cab is already assigned to a driver
-    if (cab.driverId) {
-        return createError(req, res, next, "Driver is already assigned to this Cab", 409);
-    }
-    // Assign the driver to the cab
-    const assignedCab = await CabModel.findOneAndUpdate({ cabRegistrationNumber: cabRegistrationNumber }, { $set: { driverId: driverId } });
     // Update the driver details
-    await DriverModel.findOneAndUpdate({ driverId: driverId }, { $set: { cabRegistrationNumber: cabRegistrationNumber } });
+    const assignedCab = await DriverModel.findOneAndUpdate({ driverId: driverId }, { $set: { cabRegistrationNumber: cabRegistrationNumber } });
     // Send the response
     res.status(200).json({
         success: true,
@@ -93,11 +93,6 @@ export const deleteCab = async (req, res, next) => {
     if (!cab) {
         return createError(req, res, next, "Cab does not exist", 404);
     }
-    // Check if cab is assigned to a driver
-    if (cab.driverId) {
-        // Delete the cabRegistrationNumber from the driver
-        await DriverModel.findOneAndUpdate({ cabRegistrationNumber: cabRegistrationNumber }, { $set: { cabRegistrationNumber: null } });
-    }
     // Delete the cab from the database
     await CabModel.findOneAndDelete({
         cabRegistrationNumber: cabRegistrationNumber,
@@ -106,23 +101,6 @@ export const deleteCab = async (req, res, next) => {
     res.status(200).json({
         success: true,
         message: "Cab deleted successfully",
-    });
-};
-// Get all the cabs with driver assigned
-export const getAllCabsWithDriver = async (req, res, next) => {
-    // Get all the cabs from the database
-    const cabs = await CabModel.find({
-        driverId: { $ne: null },
-    });
-    // Check if cabs array is empty
-    if (cabs.length === 0) {
-        return createError(req, res, next, "No cabs found", 404);
-    }
-    // Send the response
-    res.status(200).json({
-        success: true,
-        message: "Cabs fetched successfully",
-        data: cabs,
     });
 };
 // Unassign driver from a cab
@@ -136,14 +114,10 @@ export const unassignDriver = async (req, res, next) => {
     if (!cab) {
         return createError(req, res, next, "Cab does not exist", 404);
     }
-    // Check if the cab is already assigned to a driver
-    if (!cab.driverId) {
-        return createError(req, res, next, "No driver is assigned to this cab", 409);
-    }
     // Unassign the driver from the cab
     const unassignedCab = await CabModel.findOneAndUpdate({ cabRegistrationNumber: cabRegistrationNumber }, { $set: { driverId: null } });
     // Update the driver details
-    await DriverModel.findOneAndUpdate({ driverId: cab.driverId }, { $set: { cabRegistrationNumber: null } });
+    await DriverModel.findOneAndUpdate({ $set: { cabRegistrationNumber: null } });
     // Send the response
     res.status(200).json({
         success: true,
@@ -164,6 +138,30 @@ export const getAllCabsWithoutDriver = async (req, res, next) => {
     res.status(200).json({
         success: true,
         message: "List of all the cabs without driver assigned",
+        data: cabs,
+    });
+};
+// Get all the cabs with driver assigned to it using join logic
+export const getAllCabsWithDriver = async (req, res, next) => {
+    // Get all cabs with driver assigned
+    const cabs = await CabModel.aggregate([
+        {
+            $lookup: {
+                from: "driver",
+                localField: "cabRegistrationNumber",
+                foreignField: "cabRegistrationNumber",
+                as: "driver",
+            },
+        },
+    ]);
+    // Check if the cabs array is empty
+    if (!cabs) {
+        return createError(req, res, next, "Cabs not found", 400);
+    }
+    // Return cabs
+    res.status(200).json({
+        success: true,
+        message: "List of all the cabs with driver assigned",
         data: cabs,
     });
 };

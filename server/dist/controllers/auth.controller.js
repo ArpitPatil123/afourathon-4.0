@@ -3,9 +3,9 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import createError from "../utils/createError.js";
 export const registerUser = async (req, res, next) => {
-    const { name, email, password, id, phone, cnfPassword } = req.body;
+    const { name, email, password, phone, cnfPassword } = req.body;
     // Check if all the fields are present
-    if (!name || !email || !password || !id || !phone || !cnfPassword) {
+    if (!name || !email || !password || !phone || !cnfPassword) {
         return createError(req, res, next, "Please provide all the details", 400);
     }
     // Check if the phone number is valid
@@ -18,6 +18,9 @@ export const registerUser = async (req, res, next) => {
     }
     // Check if the user already exists if the user exists, return an error Else, create a new user
     const user = await UserModel.findOne({ email: email });
+    if (user?.phone === phone) {
+        return createError(req, res, next, "Phone number already exists", 409);
+    }
     if (user) {
         return createError(req, res, next, "User already exists", 409);
     }
@@ -29,7 +32,6 @@ export const registerUser = async (req, res, next) => {
         name,
         email,
         password: hashPassword,
-        id,
         phone,
     });
     const savedUser = await newUser.save();
@@ -56,7 +58,7 @@ export const loginUser = async (req, res, next) => {
         return createError(req, res, next, "Invalid password", 400);
     }
     // Create and assign a token
-    const token = jwt.sign({ _id: user._id, name: user.name, id: user.id }, process.env.TOKEN_SECRET);
+    const token = jwt.sign({ _id: user._id, name: user.name }, process.env.TOKEN_SECRET);
     // Set token in cookie
     res.cookie("auth-token", token, {
         httpOnly: true,

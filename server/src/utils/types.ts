@@ -1,7 +1,6 @@
 import { Document } from "mongoose";
 
 export interface User extends Document {
-  id: number;
   name: string;
   email: string;
   phone: string;
@@ -16,16 +15,15 @@ export interface customError {
 }
 
 export interface Driver extends Document {
-  driverId: number;
+  driverId: string;
   driverName: string;
   driverEmail: string;
   driverPhone: string;
-  cabRegistrationNumber: string;
+  cabRegistrationNumber?: string;
 }
 
 export interface Cab extends Document {
   cabRegistrationNumber: string;
   cabModel: string;
   cabColour: string;
-  driverId?: number;
 }

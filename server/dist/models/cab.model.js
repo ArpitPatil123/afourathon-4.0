@@ -13,10 +13,6 @@ const cabSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    driverId: {
-        type: Number,
-        default: null,
-    },
 });
 const CabModel = mongoose.model("Cab", cabSchema);
 export default CabModel;

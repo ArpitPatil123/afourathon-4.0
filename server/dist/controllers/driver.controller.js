@@ -1,26 +1,31 @@
+import crypto from "crypto";
 import DriverModel from "../models/driver.model.js";
 import createError from "../utils/createError.js";
 import CabModel from "../models/cab.model.js";
 // Add driver details into the database
 export const addDriver = async (req, res, next) => {
-    const { driverId, driverName, driverEmail, driverPhone } = req.body;
+    const { driverName, driverEmail, driverPhone } = req.body;
     // Check if all the required fields are present and valid phone number
-    if (!driverId || !driverName || !driverEmail || !driverPhone) {
+    if (!driverName || !driverEmail || !driverPhone) {
         return createError(req, res, next, "Please provide all the details", 400);
     }
+    const uniqueId = crypto.randomUUID();
     if (driverPhone.length !== 10) {
         return createError(req, res, next, "Please provide a valid phone number", 400);
     }
     // Check if the driver already exists if the driver exists, return an error Else, create a new driver
     const driver = await DriverModel.findOne({
-        $or: [{ driverEmail: driverEmail }, { driverId: driverId }],
+        $or: [{ driverEmail: driverEmail }, { driverPhone: driverPhone }],
     });
-    if (driver) {
-        return createError(req, res, next, "Driver already exists", 409);
+    if (driver?.driverPhone === driverPhone) {
+        return createError(req, res, next, "Phone number already exists", 409);
+    }
+    if (driver?.driverEmail === driverEmail) {
+        return createError(req, res, next, "Email already exists", 409);
     }
     // Create a new driver
     const newDriver = new DriverModel({
-        driverId,
+        driverId: uniqueId,
         driverName,
         driverEmail,
         driverPhone,
@@ -67,10 +72,6 @@ export const assignCab = async (req, res, next) => {
     });
     if (!cab) {
         return createError(req, res, next, "Cab not found", 404);
-    }
-    // Check if the cab is already assigned to a driver
-    if (cab.driverId) {
-        return createError(req, res, next, "Cab is already assigned to Driver", 409);
     }
     // Assign cab to the driver
     await DriverModel.updateOne({ driverId: driverId }, { $set: { cabRegistrationNumber: cabRegistrationNumber } });

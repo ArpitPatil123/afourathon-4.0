@@ -1,11 +1,6 @@
 import mongoose from "mongoose";
 // Creating the user schema
 const userSchema = new mongoose.Schema({
-    id: {
-        type: Number,
-        required: true,
-        unique: true,
-    },
     name: {
         type: String,
         required: [true, "Please enter your name"],
