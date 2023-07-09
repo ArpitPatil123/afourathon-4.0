@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { User, customError } from "../utils/types.js";
+import { User } from "../utils/types.js";
 import UserModel from "../models/user.model.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";

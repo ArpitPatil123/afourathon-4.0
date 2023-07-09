@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const connectDB = async () => {
-  const connect = await mongoose.connect(process.env.MONGO_URI ?? "");
+  const connect = await mongoose.connect(process.env.MONGODB_URI ?? "");
   console.log(`MongoDB connected: ${connect.connection.host}`);
 };
 
@@ -23,3 +23,5 @@ mongoose.connection.on("connected", () => {
 });
 
 export default connectDB;
+
+// ac-vfkpkdu-shard-00-00.d9xd50h.mongodb.net

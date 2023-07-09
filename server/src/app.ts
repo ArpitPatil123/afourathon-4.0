@@ -4,7 +4,6 @@ import cors from "cors";
 import dotenv from "dotenv";
 
 // Importing required files
-import connectDB from "./utils/db.js";
 import errorHandler from "./middlewares/errorHandler.js";
 
 // Importing routes
@@ -26,8 +25,9 @@ app.use(
   })
 );
 
-// Connecting to the database
-connectDB();
+app.get("/", (req, res) => {
+  res.status(200).send("Hello World!");
+});
 
 // Creating routes
 app.use("/api/v4/auth", auth_router); // Authentication routes
