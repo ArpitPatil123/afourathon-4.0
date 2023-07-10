@@ -1,0 +1,509 @@
+{
+	"info": {
+		"_postman_id": "da5e1927-1cc5-4510-ae21-de2491b23938",
+		"name": "Afourathon 4.0",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "22625226",
+		"_collection_link": "https://cloudy-space-589284.postman.co/workspace/Arpit-Patil~64991181-7caf-4c20-ba40-69bb8d76af24/collection/22625226-da5e1927-1cc5-4510-ae21-de2491b23938?action=share&creator=22625226&source=collection_link"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"arpit123\",\r\n  \"email\": \"arpit1234@gmail.com\",\r\n  \"password\": \"12345\",\r\n  \"phone\": \"1234567890\",\r\n  \"cnfPassword\": \"12345\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v4/auth/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v4",
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"arpit123@gmail.com\",\r\n  \"password\": \"12345\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v4/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v4",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Driver",
+			"item": [
+				{
+					"name": "Add Driver",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"driverName\":\"arpit\",\r\n  \"driverEmail\":\"arpit1234@gmail.com\",\r\n  \"driverPhone\": \"1234567894\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v4/driver/add_driver",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v4",
+								"driver",
+								"add_driver"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all drivers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/v4/driver/get_all_drivers",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v4",
+								"driver",
+								"get_all_drivers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Driver",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/v4/driver/delete_driver/ee40b1c6-70c2-4427-bed2-ec7d827905bf",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v4",
+								"driver",
+								"delete_driver",
+								"ee40b1c6-70c2-4427-bed2-ec7d827905bf"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Assign Cab",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/v4/driver/assign_cab/f313b399-41ac-4604-8a37-c1699ca6243d/MH02TJ1235",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v4",
+								"driver",
+								"assign_cab",
+								"f313b399-41ac-4604-8a37-c1699ca6243d",
+								"MH02TJ1235"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get drivers with Cab",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/v4/driver/get_all_drivers_with_cab",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v4",
+								"driver",
+								"get_all_drivers_with_cab"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Unassign Cab",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/v4/driver/unassign_cab/f313b399-41ac-4604-8a37-c1699ca6243d",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v4",
+								"driver",
+								"unassign_cab",
+								"f313b399-41ac-4604-8a37-c1699ca6243d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"driverName\":\"Arpit Patil\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v4/driver/update_driver/f313b399-41ac-4604-8a37-c1699ca6243d",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v4",
+								"driver",
+								"update_driver",
+								"f313b399-41ac-4604-8a37-c1699ca6243d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all cabs without driver",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/v4/driver/get_all_drivers_without_cab",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v4",
+								"driver",
+								"get_all_drivers_without_cab"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Cab",
+			"item": [
+				{
+					"name": "Add Cab",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"cabRegistrationNumber\":\"MH02TJ1236\",\r\n  \"cabModel\":\"BMW\",\r\n  \"cabColour\":\"Black\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v4/cab/add_cab",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v4",
+								"cab",
+								"add_cab"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all Cabs",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/v4/cab/get_all_cabs",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v4",
+								"cab",
+								"get_all_cabs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Assign Driver",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/v4/cab/assign_driver/f313b399-41ac-4604-8a37-c1699ca6243d/MH02TJ1235",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v4",
+								"cab",
+								"assign_driver",
+								"f313b399-41ac-4604-8a37-c1699ca6243d",
+								"MH02TJ1235"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Cab",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/v4/cab/delete_cab/12345",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v4",
+								"cab",
+								"delete_cab",
+								"12345"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Unassign Driver",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/v4/cab/unassign_driver/MH02TJ1235",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v4",
+								"cab",
+								"unassign_driver",
+								"MH02TJ1235"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all cabs without driver",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/v4/cab/get_all_cabs_without_driver",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v4",
+								"cab",
+								"get_all_cabs_without_driver"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all cabs with driver",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/v4/cab/get_all_cabs_with_driver",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v4",
+								"cab",
+								"get_all_cabs_with_driver"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Cab details",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"cabModel\":\"MERCEDES\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v4/cab/update_cab/MH02TJ1236",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v4",
+								"cab",
+								"update_cab",
+								"MH02TJ1236"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Cab registration number",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/v4/cab/update_cab_registration_number/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v4",
+								"cab",
+								"update_cab_registration_number",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
