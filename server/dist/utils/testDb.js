@@ -12,21 +12,26 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 import { MongoMemoryServer } from "mongodb-memory-server";
 import mongoose from "mongoose";
 let mongoServer;
+let connection; // type of connection is Connection
 const connectDB = () => __awaiter(void 0, void 0, void 0, function* () {
     mongoServer = yield MongoMemoryServer.create();
     const uri = mongoServer.getUri();
-    yield mongoose.connect(uri);
+    connection = yield mongoose.connect(uri);
 });
 const dropDB = () => __awaiter(void 0, void 0, void 0, function* () {
-    yield mongoose.connection.dropDatabase();
-    yield mongoose.connection.close();
-    yield mongoServer.stop();
+    if (connection) {
+        yield mongoose.connection.dropDatabase();
+        yield mongoose.connection.close();
+    }
+    if (mongoServer) {
+        yield mongoServer.stop();
+    }
 });
 const dropCollections = () => __awaiter(void 0, void 0, void 0, function* () {
     if (mongoServer) {
-        const collection = yield mongoose.connection.db.collections();
-        for (let coll of collection) {
-            yield coll.deleteMany({});
+        const collections = yield mongoose.connection.db.collections();
+        for (let collection of collections) {
+            yield collection.drop();
         }
     }
 });

@@ -31,7 +31,7 @@ afterAll(async () => {
   await dropDB();
 });
 
-describe("POST /api/v4/auth", () => {
+describe("/api/v4/auth", () => {
   // Block of code to test the functionality of the register route
   describe("Register Route Functionality", () => {
     // Test case 1: Should return 201 if user is created
@@ -97,6 +97,18 @@ describe("POST /api/v4/auth", () => {
         .send({});
 
       expect(response.status).toBe(400);
+      expect(response.body).toHaveProperty("success", false);
+      expect(response.body).toHaveProperty("message");
+    });
+
+    // Test case 7: Should return 400 if phone number exists
+    it("Should return 400 if phone number exists", async () => {
+      await request(app).post("/api/v4/auth/register").send(dummyData); // First send the request to create a user with dummyData object and then send the same request again
+
+      const response = await request(app)
+        .post("/api/v4/auth/register")
+        .send({ ...dummyData, email: "arpitpatil@gmail.com" });
+      expect(response.status).toBe(409);
       expect(response.body).toHaveProperty("success", false);
       expect(response.body).toHaveProperty("message");
     });

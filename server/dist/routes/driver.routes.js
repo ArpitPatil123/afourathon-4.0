@@ -1,8 +1,9 @@
 import { Router } from "express";
 import { addDriver, deleteDriver, getAllDrivers, assignCab, getAllDriversWithCab, unassignCab, getAllDriversWithoutCab, updateDriver, } from "../controllers/driver.controller.js";
+import { validateEmail } from "../middlewares/validateEmail.js";
 const router = Router();
 // Add driver details in the database
-router.post("/add_driver", addDriver);
+router.post("/add_driver", validateEmail, addDriver);
 // Get all the drivers from the database
 router.get("/get_all_drivers", getAllDrivers);
 // Delete driver details from the database

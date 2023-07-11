@@ -21,7 +21,7 @@ mongoose.connection.on("disconnected", () => {
 // If there is an error in connecting to the database then exit the process
 mongoose.connection.on("error", (err) => {
     console.log(`MongoDB connection error: ${err}`);
-    process.exit(1);
+    connectDB();
 });
 // If the connection is successful then log it
 mongoose.connection.on("connected", () => {

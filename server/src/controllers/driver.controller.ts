@@ -75,7 +75,7 @@ export const getAllDrivers = async (
   const drivers = await DriverModel.find();
 
   // Check if found or not
-  if (!drivers) {
+  if (drivers.length === 0) {
     return createError(req, res, next, "No drivers found", 404);
   }
 
@@ -154,7 +154,13 @@ export const assignCab = async (
 
   // Check if the cab is already assigned
   if (cab.isAssigned) {
-    return createError(req, res, next, "Cab already assigned", 409);
+    return createError(
+      req,
+      res,
+      next,
+      "Cab is already assigned to another driver",
+      409
+    );
   }
 
   // Assign the cab to the driver
@@ -194,7 +200,13 @@ export const unassignCab = async (
 
   // Check if the cab is assigned
   if (!driver.cabRegistrationNumber) {
-    return createError(req, res, next, "Cab already not assigned", 404);
+    return createError(
+      req,
+      res,
+      next,
+      "Cab already not assigned to this driver",
+      404
+    );
   }
 
   // Update the cab status
@@ -296,6 +308,6 @@ export const updateDriver = async (
   // Send the response
   res.status(200).json({
     success: true,
-    message: "Driver updated successfully",
+    message: "Driver details updated successfully",
   });
 };

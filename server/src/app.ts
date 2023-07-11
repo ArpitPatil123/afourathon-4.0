@@ -10,6 +10,7 @@ import errorHandler from "./middlewares/errorHandler.js";
 import auth_router from "./routes/auth.routes.js";
 import driver_router from "./routes/driver.routes.js";
 import cab_router from "./routes/cab.route.js";
+import { validateEmail } from "./middlewares/validateEmail.js";
 
 // Initializing the express app
 const app: Application = express();

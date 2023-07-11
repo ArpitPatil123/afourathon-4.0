@@ -26,7 +26,10 @@ export const registerUser = (req, res, next) => __awaiter(void 0, void 0, void 0
         return createError(req, res, next, "Password and Confirm Password doesn't match", 400);
     }
     // Check if the user already exists if the user exists, return an error Else, create a new user
-    const user = yield UserModel.findOne({ email: email });
+    const user = yield UserModel.findOne({
+        $or: [{ email: email }, { phone: phone }],
+    });
+    // Check if the user phone already exists
     if ((user === null || user === void 0 ? void 0 : user.phone) === phone) {
         return createError(req, res, next, "Phone number already exists", 409);
     }
