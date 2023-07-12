@@ -107,7 +107,7 @@ export const assignDriver = async (
 
   // Check if the cab is already assigned to a driver
   if (cab.isAssigned) {
-    return createError(req, res, next, "Driver is already assigned", 400);
+    return createError(req, res, next, "Driver is already assigned", 409);
   }
 
   // Update the cab status
@@ -131,6 +131,11 @@ export const assignDriver = async (
       },
     }
   );
+  // Send the response
+  res.status(200).json({
+    success: true,
+    message: "Driver assigned successfully",
+  });
 };
 
 // Unassign driver from the cab
@@ -148,7 +153,12 @@ export const unassignDriver = async (
 
   // If cab not exixsts return an error
   if (!cab) {
-    return createError(req, res, next, "Cab not found", 404);
+    return createError(req, res, next, "Cab does not exist", 404);
+  }
+
+  // Check if cab is assigned to driver
+  if (!cab.isAssigned) {
+    return createError(req, res, next, "Driver already not assigned", 409);
   }
 
   // Set the status of cab
@@ -195,7 +205,7 @@ export const deleteCab = async (
 
   // If cab not exists return an error
   if (!cab) {
-    return createError(req, res, next, "Cab not found", 404);
+    return createError(req, res, next, "Cab does not exist", 404);
   }
 
   // Check if cab is assigned to driver
@@ -346,6 +356,6 @@ export const updateCabRegistrationNumber = async (
   // Send the response
   res.status(200).json({
     success: true,
-    message: "Cab details updated successfully",
+    message: "Cab registration number updated successfully",
   });
 };

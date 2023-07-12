@@ -312,20 +312,6 @@ describe("/api/v4/driver", () => {
   });
 
   describe("Get all Drivers with cab functionality", () => {
-    // Test case 2: Should return 404 if drivers not found
-    it("Should return 404 if drivers not found", async () => {
-      await request(app)
-        .post("/api/v4/driver/add_driver")
-        .send(dummyDriverData);
-
-      const response = await request(app).get(
-        "/api/v4/driver/get_all_drivers_with_cab"
-      );
-      expect(response.status).toBe(404);
-      expect(response.body).toHaveProperty("success", false);
-      expect(response.body).toHaveProperty("message", "No drivers found");
-    });
-
     // Test case 1: Should return 200 if drivers are found
     it("Should return 200 if drivers are found", async () => {
       const cab = await request(app)
@@ -350,6 +336,20 @@ describe("/api/v4/driver", () => {
         "Drivers fetched successfully"
       );
       expect(response.body).toHaveProperty("data");
+    });
+
+    // Test case 2: Should return 404 if drivers not found
+    it("Should return 404 if drivers not found", async () => {
+      await request(app)
+        .post("/api/v4/driver/add_driver")
+        .send(dummyDriverData);
+
+      const response = await request(app).get(
+        "/api/v4/driver/get_all_drivers_with_cab"
+      );
+      expect(response.status).toBe(404);
+      expect(response.body).toHaveProperty("success", false);
+      expect(response.body).toHaveProperty("message", "No drivers found");
     });
   });
 
