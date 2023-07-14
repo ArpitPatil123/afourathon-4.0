@@ -1,0 +1,9 @@
+version: '3'
+services:
+  afourathon-app:
+    build:
+      context: .
+      target: production
+    environment:
+      - NODE_ENV=production
+    command: node server.js

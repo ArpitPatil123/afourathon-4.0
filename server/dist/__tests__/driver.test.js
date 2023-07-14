@@ -219,16 +219,6 @@ describe("/api/v4/driver", () => {
         }));
     });
     describe("Get all Drivers with cab functionality", () => {
-        // Test case 2: Should return 404 if drivers not found
-        it("Should return 404 if drivers not found", () => __awaiter(void 0, void 0, void 0, function* () {
-            yield request(app)
-                .post("/api/v4/driver/add_driver")
-                .send(dummyDriverData);
-            const response = yield request(app).get("/api/v4/driver/get_all_drivers_with_cab");
-            expect(response.status).toBe(404);
-            expect(response.body).toHaveProperty("success", false);
-            expect(response.body).toHaveProperty("message", "No drivers found");
-        }));
         // Test case 1: Should return 200 if drivers are found
         it("Should return 200 if drivers are found", () => __awaiter(void 0, void 0, void 0, function* () {
             const cab = yield request(app)
@@ -243,6 +233,16 @@ describe("/api/v4/driver", () => {
             expect(response.body).toHaveProperty("success", true);
             expect(response.body).toHaveProperty("message", "Drivers fetched successfully");
             expect(response.body).toHaveProperty("data");
+        }));
+        // Test case 2: Should return 404 if drivers not found
+        it("Should return 404 if drivers not found", () => __awaiter(void 0, void 0, void 0, function* () {
+            yield request(app)
+                .post("/api/v4/driver/add_driver")
+                .send(dummyDriverData);
+            const response = yield request(app).get("/api/v4/driver/get_all_drivers_with_cab");
+            expect(response.status).toBe(404);
+            expect(response.body).toHaveProperty("success", false);
+            expect(response.body).toHaveProperty("message", "No drivers found");
         }));
     });
     describe("Get all Drivers without cab functionality", () => {
