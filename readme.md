@@ -1,4 +1,3 @@
-````markdown
 # Cab Management
 
 The application we build for the hackathon aims to address the pain areas in managing drivers and cabs for a cab management system. This application's intended end users/customers could be cab service providers, fleet managers, or any organization that deals with managing a fleet of drivers and cabs.
@@ -15,10 +14,10 @@ These instructions will guide you on setting up and running the Node.js server u
 ### Installation
 
 1. Clone the project repository from GitHub:
+
    ```shell
    git clone <repository_url>
    ```
-````
 
 2. Navigate to the project root directory:
 
