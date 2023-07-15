@@ -62,4 +62,4 @@ These instructions will guide you on setting up and running the Node.js server u
    ```
    This command will stop and remove the containers.
 
-These instructions now include the step to clone the project repository from GitHub before proceeding with the Docker setup. Make sure to replace `<repository_url>` with the actual URL of your project repository.
+These instructions can be used to setup a nodejs server using docker.
